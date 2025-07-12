@@ -1,0 +1,25 @@
+[project]
+name = "dspy-practice"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "datasets>=4.0.0",
+    "dspy",
+    "pydantic>=2.11.7",
+    "ruff>=0.12.3",
+]
+
+[tool.pyright]
+reportMissingTypeStubs = false
+reportUnknownMemberType = false
+
+[tool.pylsp-mypy]
+overrides = ["--ignore-missing-imports"]
+
+[tool.mypy]
+ignore_missing_imports = true
+
+[tool.uv.sources]
+dspy = { git = "https://github.com/stanfordnlp/dspy.git" }
