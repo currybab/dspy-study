@@ -498,7 +498,9 @@ dependencies = [
     { name = "datasets" },
     { name = "dspy" },
     { name = "faiss-cpu" },
+    { name = "groq" },
     { name = "ipykernel" },
+    { name = "math-equivalence" },
     { name = "mlflow" },
     { name = "pydantic" },
     { name = "ruff" },
@@ -509,7 +511,9 @@ requires-dist = [
     { name = "datasets", specifier = ">=4.0.0" },
     { name = "dspy", git = "https://github.com/stanfordnlp/dspy.git" },
     { name = "faiss-cpu", specifier = ">=1.11.0" },
+    { name = "groq", specifier = ">=0.30.0" },
     { name = "ipykernel", specifier = ">=6.29.5" },
+    { name = "math-equivalence", git = "https://github.com/hendrycks/math.git" },
     { name = "mlflow", specifier = ">=3.1.1" },
     { name = "pydantic", specifier = ">=2.11.7" },
     { name = "ruff", specifier = ">=0.12.3" },
@@ -790,6 +794,23 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/67/10/b2a4b63d3f08362662e89c103f7fe28894a51ae0bc890fabf37d1d780e52/greenlet-3.2.3-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.whl", hash = "sha256:02b0df6f63cd15012bed5401b47829cfd2e97052dc89da3cfaf2c779124eb892", size = 692995 },
     { url = "https://files.pythonhosted.org/packages/5a/c6/ad82f148a4e3ce9564056453a71529732baf5448ad53fc323e37efe34f66/greenlet-3.2.3-cp314-cp314-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:86c2d68e87107c1792e2e8d5399acec2487a4e993ab76c792408e59394d52141", size = 655320 },
     { url = "https://files.pythonhosted.org/packages/5c/4f/aab73ecaa6b3086a4c89863d94cf26fa84cbff63f52ce9bc4342b3087a06/greenlet-3.2.3-cp314-cp314-win_amd64.whl", hash = "sha256:8c47aae8fbbfcf82cc13327ae802ba13c9c36753b67e760023fd116bc124a62a", size = 301236 },
+]
+
+[[package]]
+name = "groq"
+version = "0.30.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "anyio" },
+    { name = "distro" },
+    { name = "httpx" },
+    { name = "pydantic" },
+    { name = "sniffio" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/a9/b1/72ca20dc9b977b7f604648e8944c77b267bddeb90d8e16bda0cf0e397844/groq-0.30.0.tar.gz", hash = "sha256:919466e48fcbebef08fed3f71debb0f96b0ea8d2ec77842c384aa843019f6e2c", size = 134928 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/19/b8/5b90edf9fbd795597220e3d1b5534d845e69a73ffe1fdeb967443ed2a6cf/groq-0.30.0-py3-none-any.whl", hash = "sha256:6d9609a7778ba56432f45c1bac21b005f02c6c0aca9c1c094e65536f162c1e83", size = 131056 },
 ]
 
 [[package]]
@@ -1248,6 +1269,11 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/82/78/fedb03c7d5380df2427038ec8d973587e90561b2d90cd472ce9254cf348b/MarkupSafe-3.0.2-cp313-cp313t-win32.whl", hash = "sha256:ba8062ed2cf21c07a9e295d5b8a2a5ce678b913b45fdf68c32d95d6c1291e0b6", size = 15208 },
     { url = "https://files.pythonhosted.org/packages/4f/65/6079a46068dfceaeabb5dcad6d674f5f5c61a6fa5673746f42a9f4c233b3/MarkupSafe-3.0.2-cp313-cp313t-win_amd64.whl", hash = "sha256:e444a31f8db13eb18ada366ab3cf45fd4b31e4db1236a4448f68778c1d1a5a2f", size = 15739 },
 ]
+
+[[package]]
+name = "math-equivalence"
+version = "0.0.0"
+source = { git = "https://github.com/hendrycks/math.git#357963a7f5501a6c1708cf3f3fb0cdf525642761" }
 
 [[package]]
 name = "matplotlib"

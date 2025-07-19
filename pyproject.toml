@@ -8,7 +8,9 @@ dependencies = [
     "datasets>=4.0.0",
     "dspy",
     "faiss-cpu>=1.11.0",
+    "groq>=0.30.0",
     "ipykernel>=6.29.5",
+    "math-equivalence",
     "mlflow>=3.1.1",
     "pydantic>=2.11.7",
     "ruff>=0.12.3",
@@ -26,3 +28,4 @@ ignore_missing_imports = true
 
 [tool.uv.sources]
 dspy = { git = "https://github.com/stanfordnlp/dspy.git" }
+math-equivalence = { git = "https://github.com/hendrycks/math.git" }
