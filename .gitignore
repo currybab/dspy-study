@@ -13,3 +13,4 @@ wheels/
 .env
 
 *.jsonl
+ToolHop.json

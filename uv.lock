@@ -498,6 +498,7 @@ dependencies = [
     { name = "datasets" },
     { name = "dspy" },
     { name = "faiss-cpu" },
+    { name = "func-timeout" },
     { name = "groq" },
     { name = "ipykernel" },
     { name = "math-equivalence" },
@@ -511,6 +512,7 @@ requires-dist = [
     { name = "datasets", specifier = ">=4.0.0" },
     { name = "dspy", git = "https://github.com/stanfordnlp/dspy.git" },
     { name = "faiss-cpu", specifier = ">=1.11.0" },
+    { name = "func-timeout", specifier = ">=4.3.5" },
     { name = "groq", specifier = ">=0.30.0" },
     { name = "ipykernel", specifier = ">=6.29.5" },
     { name = "math-equivalence", git = "https://github.com/hendrycks/math.git" },
@@ -688,6 +690,12 @@ wheels = [
 http = [
     { name = "aiohttp" },
 ]
+
+[[package]]
+name = "func-timeout"
+version = "4.3.5"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/b3/0d/bf0567477f7281d9a3926c582bfef21bff7498fc0ffd3e9de21811896a0b/func_timeout-4.3.5.tar.gz", hash = "sha256:74cd3c428ec94f4edfba81f9b2f14904846d5ffccc27c92433b8b5939b5575dd", size = 44264 }
 
 [[package]]
 name = "gitdb"

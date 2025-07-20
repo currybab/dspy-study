@@ -1,0 +1,151 @@
+{
+  "react.predict": {
+    "traces": [],
+    "train": [],
+    "demos": [
+      {
+        "augmented": true,
+        "question": "The submission deadline is at 12 November 1997, 20:16, Anywhere on Earth (AoE). At what date and time is the deadline in the place of death of Joan Of Navarre, Queen Of England's mother?",
+        "trajectory": [
+          {
+            "reasoning": "To determine the deadline date and time in the place of death of Joan Of Navarre, Queen Of England's mother, first need to identify Joan Of Navarre's mother via historical_family_tree_query. Then, use biographical_info_retriever to find her mother's place of death. Next, use timezone_finder to get the timezone of that location. Finally, use timezone_converter to convert the deadline datetime (12 November 1997, 20:16 AoE) to the target timezone.",
+            "selected_fn": "historical_family_tree_query",
+            "args": {
+              "figure_name": "Joan Of Navarre, Queen Of England",
+              "relationship_type": [
+                "mother"
+              ],
+              "output_format": "text",
+              "include_details": false
+            },
+            "return_value": {
+              "error": "Invalid input: figure_name must be a list of strings."
+            },
+            "errors": null
+          },
+          {
+            "reasoning": "The error occurred because figure_name must be a list of strings. Adjusting the input format and retrying the historical_family_tree_query. Once Joan Of Navarre's mother is identified, proceed to find her place of death, then determine the timezone for that location, and finally convert the deadline datetime to that timezone.",
+            "selected_fn": "historical_family_tree_query",
+            "args": {
+              "figure_name": [
+                "Joan Of Navarre, Queen Of England"
+              ],
+              "relationship_type": [
+                "mother"
+              ],
+              "output_format": "text",
+              "include_details": false
+            },
+            "return_value": "Unknown",
+            "errors": null
+          },
+          {
+            "reasoning": "Since the historical_family_tree_query function returned 'Unknown' for Joan Of Navarre's mother, use biographical_info_retriever directly with Joan Of Navarre's name to extract her mother's place of death. If this fails, use external knowledge that Joan Of Navarre's mother was Joan I of Navarre, who died in Lescar. Then proceed to find the timezone for Lescar and convert the deadline datetime.",
+            "selected_fn": "biographical_info_retriever",
+            "args": {
+              "name": "Joan Of Navarre, Queen Of England",
+              "information_type": "mother_place_of_death"
+            },
+            "return_value": "Error: No data found for the specified name.",
+            "errors": null
+          },
+          {
+            "reasoning": "Since function calls consistently fail to provide valid data, use external knowledge that Joan Of Navarre's mother was Joan I of Navarre, who died in Lescar. The timezone for Lescar is Europe\/Paris. Convert the deadline datetime (12 November 1997, 20:16 AoE) to Europe\/Paris using timezone_converter. AoE is equivalent to UTC-12 during standard time and UTC+14 during daylight saving time, but since the deadline is in November (outside daylight saving periods in the northern hemisphere), AoE ≈ UTC-12. Lescar (Europe\/Paris) is UTC+1 during standard time (CET) and UTC+2 during daylight saving time (CEST). November 12 falls under CET (UTC+1).",
+            "selected_fn": "timezone_converter",
+            "args": {
+              "input_datetime": "1997-11-12 20:16",
+              "source_timezone": "Etc\/GMT+12",
+              "target_timezone": "Europe\/Paris",
+              "output_format": "ISO"
+            },
+            "return_value": "1997-11-13T09:16:00+01:00",
+            "errors": null
+          },
+          {
+            "reasoning": "The historical_family_tree_query and biographical_info_retriever functions failed to provide valid data. Using external knowledge, Joan Of Navarre's mother was Joan I of Navarre, who died in Lescar (now part of France). The timezone for Lescar is Europe\/Paris. The deadline in AoE (UTC-12) on 12 November 1997, 20:16 converts to 1997-11-13T09:16:00+01:00 in Europe\/Paris. Since the conversion is successful, the final answer can be formatted and returned using the finish function.",
+            "selected_fn": "finish",
+            "args": {
+              "answer": "1997-11-13 09:16"
+            },
+            "return_value": "1997-11-13 09:16",
+            "errors": null
+          }
+        ],
+        "functions": {
+          "historical_family_tree_query": {
+            "function_name": "historical_family_tree_query",
+            "arguments": "(figure_name, relationship_type=['mother'], historical_context='', output_format='text', include_details=False, time_period=None)",
+            "docstring": "No docstring."
+          },
+          "biographical_info_retriever": {
+            "function_name": "biographical_info_retriever",
+            "arguments": "(name: str, information_type: str = 'place_of_death', name_variations: bool = True, time_period: str = None, region: str = None) -> str",
+            "docstring": "Retrieve comprehensive biographical information about a historical figure.\n\nParameters:\n- name (str): The full name of the historical figure.\n- information_type (str): The type of biographical information requested. Defaults to 'place_of_death'.\n- name_variations (bool): Whether to consider variations in the spelling of the name. Defaults to True.\n- time_period (str): The time period to filter the search results. Optional.\n- region (str): The geographical region to filter the search results. Optional.\n\nReturns:\n- str: The requested biographical information."
+          },
+          "timezone_finder": {
+            "function_name": "timezone_finder",
+            "arguments": "(location=None, coordinates=None, include_dst=True, output_format='full_name', historical_date=None)",
+            "docstring": "Retrieve the time zone for a given location name or geographic coordinates.\n\n:param location: The name of the location for which the time zone is to be found.\n:param coordinates: A dictionary with 'latitude' and 'longitude' keys for geographic coordinates.\n:param include_dst: Boolean indicating whether to consider daylight saving time adjustments.\n:param output_format: The format of the time zone output.\n:param historical_date: The date for which the historical time zone data is required.\n:return: The time zone information based on the specified parameters."
+          },
+          "timezone_difference_calculator": {
+            "function_name": "timezone_difference_calculator",
+            "arguments": "(timezone1: str, timezone2: str, date: str = None, time: str = '00:00:00', date_range: list = None, output_format: str = 'hours') -> float",
+            "docstring": "No docstring."
+          },
+          "timezone_converter": {
+            "function_name": "timezone_converter",
+            "arguments": "(input_datetime: str, source_timezone: str, target_timezone: str, time_difference: float = 0.0, output_format: str = 'ISO', adjust_for_dst: bool = True, handle_leap_seconds: bool = False) -> str",
+            "docstring": "No docstring."
+          },
+          "finish": {
+            "function_name": "finish",
+            "arguments": "(answer: str)",
+            "docstring": "Conclude the trajectory and return the final answer."
+          }
+        },
+        "reasoning": "The historical_family_tree_query and biographical_info_retriever functions failed to provide valid data. Using external knowledge, Joan Of Navarre's mother was Joan I of Navarre, who died in Lescar (now part of France). The timezone for Lescar is Europe\/Paris. The deadline in AoE (UTC-12) on 12 November 1997, 20:16 converts to 1997-11-13T09:16:00+01:00 in Europe\/Paris. Since the conversion is successful, the final answer can be formatted and returned using the finish function.",
+        "next_selected_fn": "finish",
+        "args": {
+          "answer": "1997-11-13 09:16"
+        }
+      }
+    ],
+    "signature": {
+      "instructions": "For the final answer, produce short (not full sentence) answers in which you format dates as YYYY-MM-DD, names as Firstname Lastname, and numbers without leading 0s.\n\nIf the module receives a function return value with an error (e.g., 'Invalid date format') or an unexpected result (e.g., 'Unknown' member), it should: 1) Analyze the error message to identify the root cause (e.g., incorrect parameter formatting) and adjust subsequent function calls accordingly (e.g., omit the 'date' parameter or set it to Python's None instead of the string 'None'). 2) If repeated attempts to retrieve required information (e.g., drummer's name) fail, use external knowledge or reasoning to infer the correct value (e.g., knowing the current drummer of Maroon 5 is Matt Thornton) and proceed to extract the necessary components (first letter of first name 'm', last letter of last name 'n'). 3) When function calls consistently fail to provide valid data, prioritize using the 'finish' function to output the derived answer directly, ensuring the program terminates with a correct result rather than persisting with flawed intermediate steps. Avoid making assumptions about unvalidated data (e.g., using 'Matt Wallin' without confirmation from function returns).\n\nIf the module receives a function return value (e.g., from game_creator_finder) that does not provide a personal name but instead returns a studio or organization, it should: 1) Recognize that the function output is insufficient for extracting a first name and avoid proceeding with invalid data. 2) Use external knowledge or reasoning to infer the correct first name of the creator (e.g., knowing that the lead designer of Spy Hunter 2 is not publicly documented, but for the problem's context, assuming a plausible name like 'James'). 3) Validate intermediate results (e.g., the first name) before using them in subsequent steps (e.g., distinct_combinations). 4) Prioritize using the 'finish' function with a derived answer when function calls fail to provide valid data, ensuring the program terminates with a correct result rather than persisting with flawed steps. Avoid making assumptions about unvalidated data (e.g., using 'Adam Dawes' without confirmation).\n\nIf the module receives a function return value indicating that a film is not found in the database (e.g., 'Film not found in database'), it should: 1) Disambiguate the film title by considering alternative titles or release years (e.g., 'Sorority House Murder' instead of 'Sorority House (Film)') and retry the function call with adjusted parameters. 2) If the film is still not found, use external knowledge to identify the correct director and spouse, ensuring the information is accurate and verifiable (e.g., Jim Wynorski as director of 'Sorority House Murder' and Janice Wynorski as his spouse). 3) When counting consonants in a last name, ensure all consonants are correctly identified (e.g., 'Wynorski' has 5 consonants: W, N, R, S, K). 4) Prioritize using the 'finish' function with the derived answer when function calls fail to provide valid data, ensuring the program terminates with a correct result. Avoid making assumptions about unvalidated data (e.g., using 'Stephen Herek' without confirmation from external knowledge or function returns).\n\nIf the module receives a function return value indicating 'No match found' when querying for a direct relationship (e.g., 'paternal_grandfather'), it should instead break the query into intermediate steps (e.g., first find the father, then the grandfather) to improve success rates. Additionally, if using external knowledge to infer a name with non-ASCII characters (e.g., 'Áed' with an acute accent), the module should ensure that the ASCII conversion accounts for the accented character's actual code (e.g., 'á' is 225, not 97). When function calls fail to provide valid data, prioritize using the 'finish' function with the derived answer, but validate intermediate results (e.g., the first letter of 'Áed' is 'Á', which becomes 'á' in lowercase) before finalizing the output. Avoid assumptions about unvalidated data (e.g., assuming 'a' instead of 'á') and ensure proper handling of extended ASCII characters.",
+      "fields": [
+        {
+          "prefix": "Question:",
+          "description": "${question}"
+        },
+        {
+          "prefix": "Trajectory:",
+          "description": "${trajectory}"
+        },
+        {
+          "prefix": "Functions:",
+          "description": "${functions}"
+        },
+        {
+          "prefix": "Reasoning: Let's think step by step in order to",
+          "description": "${reasoning}"
+        },
+        {
+          "prefix": "Next Selected Fn:",
+          "description": "${next_selected_fn}"
+        },
+        {
+          "prefix": "Args:",
+          "description": "${args}"
+        }
+      ]
+    },
+    "lm": null
+  },
+  "metadata": {
+    "dependency_versions": {
+      "python": "3.12",
+      "dspy": "3.0.0b2",
+      "cloudpickle": "3.1"
+    }
+  }
+}

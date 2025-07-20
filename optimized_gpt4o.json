@@ -1,0 +1,319 @@
+{
+  "react.predict": {
+    "traces": [],
+    "train": [],
+    "demos": [
+      {
+        "augmented": true,
+        "question": "How many different letters are in the name of the place where the author of Hannibal and Scipio was educated?",
+        "trajectory": [
+          {
+            "reasoning": "To address the question, we first need to determine who authored \"Hannibal and Scipio.\" Once we identify the author, we can retrieve biographical information about their education, particularly where they were educated. With the name of the place, we can count the number of unique letters in that name.",
+            "selected_fn": "author_lookup",
+            "args": {
+              "title": "Hannibal and Scipio"
+            },
+            "return_value": "Error: No works found for title 'Hannibal and Scipio'.",
+            "errors": null
+          },
+          {
+            "reasoning": "The initial attempt to find the author of \"Hannibal and Scipio\" failed. It's possible that the title is not correct or not recognized. To move forward, I will search for variations of the title to identify the correct author. This will help in retrieving the educational background of the author.",
+            "selected_fn": "author_lookup",
+            "args": {
+              "title": "Hannibal and Scipio",
+              "title_variation": true
+            },
+            "return_value": "Error: No works found for title 'Hannibal and Scipio'.",
+            "errors": null
+          },
+          {
+            "reasoning": "The previous attempts to find the author of \"Hannibal and Scipio\" using the exact title were unsuccessful. From what we know, \"Hannibal and Scipio\" is a known play by Thomas Nabbes. To proceed, I will verify the author as Thomas Nabbes and then retrieve his biographical information to find out where he was educated.",
+            "selected_fn": "biographical_info_retriever",
+            "args": {
+              "person_name": "Thomas Nabbes",
+              "information_type": "education",
+              "output_format": "text"
+            },
+            "return_value": "Exeter College",
+            "errors": null
+          },
+          {
+            "reasoning": "With the name of the educational institution 'Exeter College' where Thomas Nabbes, the author of \"Hannibal and Scipio,\" was educated, we can proceed to count the number of unique letters in the name 'Exeter College'.",
+            "selected_fn": "enhanced_unique_letter_counter",
+            "args": {
+              "input_string": "Exeter College",
+              "ignore_case": true,
+              "ignore_non_alpha": true
+            },
+            "return_value": {
+              "unique_count": 8
+            },
+            "errors": null
+          },
+          {
+            "reasoning": "To answer the question, I determined that Thomas Nabbes is the author of \"Hannibal and Scipio.\" I then retrieved biographical information indicating that Thomas Nabbes was educated at Exeter College. Using this information, I counted the number of unique letters in the name \"Exeter College,\" resulting in 8 unique letters.",
+            "selected_fn": "finish",
+            "args": {
+              "answer": "8"
+            },
+            "return_value": "8",
+            "errors": null
+          }
+        ],
+        "functions": {
+          "author_lookup": {
+            "function_name": "author_lookup",
+            "arguments": "(title: str, author_count: int = 1, title_variation: bool = False, edition: str = None, language: str = 'English', publication_year: int = None, genre: str = None) -> str",
+            "docstring": "Identifies the author(s) of a given literary work based on the specified parameters.\n\nParameters:\n- title (str): The title of the literary work.\n- author_count (int): The number of authors to return. Default is 1.\n- title_variation (bool): Whether to consider variations of the title. Default is False.\n- edition (str): The edition of the literary work.\n- language (str): The language of the literary work. Default is 'English'.\n- publication_year (int): The year the literary work was published.\n- genre (str): The genre of the literary work.\n\nReturns:\n- str: The name(s) of the author(s)."
+          },
+          "biographical_info_retriever": {
+            "function_name": "biographical_info_retriever",
+            "arguments": "(person_name: str, information_type: str, output_format: str = 'text', time_period: str = None)",
+            "docstring": "Retrieve comprehensive biographical information about a historical figure.\n\n:param person_name: The full name of the person whose biographical information is being queried.\n:param information_type: The type of biographical information requested.\n:param output_format: The format of the output. Defaults to 'text'.\n:param time_period: The specific time period of interest for the biographical information, formatted as 'YYYY-YYYY'.\n:return: The requested biographical information in the specified format."
+          },
+          "enhanced_unique_letter_counter": {
+            "function_name": "enhanced_unique_letter_counter",
+            "arguments": "(input_string, ignore_case=True, ignore_non_alpha=True, custom_character_set=None, output_details=False, performance_mode='normal')",
+            "docstring": "No docstring."
+          },
+          "finish": {
+            "function_name": "finish",
+            "arguments": "(answer: str)",
+            "docstring": "Conclude the trajectory and return the final answer."
+          }
+        },
+        "reasoning": "To answer the question, I determined that Thomas Nabbes is the author of \"Hannibal and Scipio.\" I then retrieved biographical information indicating that Thomas Nabbes was educated at Exeter College. Using this information, I counted the number of unique letters in the name \"Exeter College,\" resulting in 8 unique letters.",
+        "next_selected_fn": "finish",
+        "args": {
+          "answer": "8"
+        }
+      },
+      {
+        "augmented": true,
+        "question": "How many distinct two-letter combinations exist in the first name of the child of the person who sponsored the resolution to reopen trade with Vietnam, along with Kerry?",
+        "trajectory": [
+          {
+            "reasoning": "To find the number of distinct two-letter combinations in the first name of the child of the person who co-sponsored the resolution to reopen trade with Vietnam with Kerry, we need to follow these steps:\n\n1. Use the `resolution_sponsor_finder` function to find the co-sponsors of the resolution to reopen trade with Vietnam, where Kerry is already known as a sponsor.\n2. Identify the co-sponsor from the list returned by the `resolution_sponsor_finder`.\n3. Use the `family_relationship_query` function to find the children of this identified co-sponsor.\n4. Extract the first name of the child using the `extract_first_name` function.\n5. Calculate the number of distinct two-letter combinations in the child's first name using the `distinct_combinations` function.\n\nWe will start by identifying the co-sponsor of the resolution.",
+            "selected_fn": "resolution_sponsor_finder",
+            "args": {
+              "resolution_topic": "reopen trade with Vietnam",
+              "known_sponsor": "Kerry"
+            },
+            "return_value": [],
+            "errors": null
+          },
+          {
+            "reasoning": "The previous attempt to identify the co-sponsors of the resolution to reopen trade with Vietnam did not return any results. Given that John Kerry is a known sponsor, it is likely that the resolution in question is associated with him. Since the `resolution_sponsor_finder` function did not yield results, I will proceed by manually identifying a potential co-sponsor based on historical context. John McCain is a known co-sponsor who worked with Kerry on Vietnam trade relations. Next, I will use the `family_relationship_query` function to find the children of John McCain.",
+            "selected_fn": "family_relationship_query",
+            "args": {
+              "individual_name": "John McCain",
+              "relationship_type": "children",
+              "output_format": "list"
+            },
+            "return_value": [],
+            "errors": null
+          },
+          {
+            "reasoning": "The previous attempts to identify the co-sponsors and find the children of John McCain did not yield results. Given that John McCain is a known co-sponsor with John Kerry on Vietnam trade relations, it is reasonable to proceed with the assumption that John McCain is the co-sponsor. Since the `family_relationship_query` function did not return results, I will proceed based on known information about John McCain's family. John McCain had a daughter named Meghan McCain. I will extract the first name \"Meghan\" and calculate the number of distinct two-letter combinations in it.",
+            "selected_fn": "distinct_combinations",
+            "args": {
+              "input": "Meghan",
+              "case_sensitive": false,
+              "ordered": false,
+              "output_format": "count",
+              "combination_length": [
+                2
+              ]
+            },
+            "return_value": 15,
+            "errors": null
+          },
+          {
+            "reasoning": "The previous attempts to find the co-sponsor of the resolution with John Kerry and the child of John McCain did not produce automated results. Based on historical context, John McCain is a known co-sponsor with John Kerry on the trade resolution with Vietnam. Therefore, I manually identified John McCain's daughter, Meghan McCain, as the child in question. I then calculated the number of distinct two-letter combinations in the name \"Meghan,\" resulting in 15 combinations. This process is now complete.",
+            "selected_fn": "finish",
+            "args": {
+              "answer": "15"
+            },
+            "return_value": "15",
+            "errors": null
+          }
+        ],
+        "functions": {
+          "resolution_sponsor_finder": {
+            "function_name": "resolution_sponsor_finder",
+            "arguments": "(resolution_topic, known_sponsor, year_range=None, output_format='list', legislative_body=None, political_party=None, geographic_region=None, resolution_type=None)",
+            "docstring": "Identifies co-sponsors of legislative resolutions based on the given parameters.\n\nParameters:\n- resolution_topic (str): The topic or title of the resolution to be searched.\n- known_sponsor (str): The name of the known sponsor.\n- year_range (list of int, optional): The range of years to search within.\n- output_format (str, optional): The format of the output, either 'list' or 'detailed'.\n- legislative_body (str, optional): The legislative body to filter the search.\n- political_party (str, optional): The political party affiliation to filter the co-sponsors.\n- geographic_region (str, optional): The geographic region to filter the co-sponsors.\n- resolution_type (str, optional): The type of resolution to be searched.\n\nReturns:\n- list or dict: A list of co-sponsors or detailed information based on the output_format."
+          },
+          "family_relationship_query": {
+            "function_name": "family_relationship_query",
+            "arguments": "(individual_name, relationship_type='all', age_range=None, gender='any', output_format='list')",
+            "docstring": "Retrieve detailed family relationship information, focusing on identifying the children of a given individual.\n\nParameters:\n- individual_name (str): The name of the individual whose children are to be identified.\n- relationship_type (str): The type of child relationship to be considered. Defaults to 'all'.\n- age_range (dict): The age range of children to be considered, with 'min_age' and 'max_age' as keys.\n- gender (str): The gender of children to be included in the results. Defaults to 'any'.\n- output_format (str): The format of the output. Defaults to 'list'.\n\nReturns:\n- The list of children based on the specified filters and format."
+          },
+          "extract_first_name": {
+            "function_name": "extract_first_name",
+            "arguments": "(full_name, delimiter=' ', case_sensitive=True, include_middle_name=False, handle_suffix=False, name_format='western')",
+            "docstring": "Extracts the first name from a full name string based on the specified parameters.\n\n:param full_name: The full name from which the first name will be extracted.\n:param delimiter: The delimiter used to separate names in the full name string.\n:param case_sensitive: Determines if the extraction should be case-sensitive.\n:param include_middle_name: Indicates whether to include the middle name in the extraction.\n:param handle_suffix: Determines if suffixes should be considered during extraction.\n:param name_format: Specifies the name format to be used for extraction.\n:return: The extracted first name, with optional middle name and suffix handling."
+          },
+          "distinct_combinations": {
+            "function_name": "distinct_combinations",
+            "arguments": "(input, case_sensitive=False, ordered=True, output_format='count', filter_characters='', combination_length=[2], exclude_combinations=[])",
+            "docstring": "No docstring."
+          },
+          "finish": {
+            "function_name": "finish",
+            "arguments": "(answer: str)",
+            "docstring": "Conclude the trajectory and return the final answer."
+          }
+        },
+        "reasoning": "The previous attempts to find the co-sponsor of the resolution with John Kerry and the child of John McCain did not produce automated results. Based on historical context, John McCain is a known co-sponsor with John Kerry on the trade resolution with Vietnam. Therefore, I manually identified John McCain's daughter, Meghan McCain, as the child in question. I then calculated the number of distinct two-letter combinations in the name \"Meghan,\" resulting in 15 combinations. This process is now complete.",
+        "next_selected_fn": "finish",
+        "args": {
+          "answer": "15"
+        }
+      },
+      {
+        "augmented": true,
+        "question": "What is the ASCII code of the last letter of the first name of the current drummer of the band who did the song \"What Lovers Do\"?",
+        "trajectory": [
+          {
+            "reasoning": "To determine the ASCII code of the last letter of the first name of the current drummer of the band who performed the song \"What Lovers Do,\" we need to follow these steps:\n\n1. Identify the band that performed \"What Lovers Do.\"\n2. Find the current drummer of that band.\n3. Extract the first name of the drummer.\n4. Determine the last letter of the first name.\n5. Convert that letter to its ASCII code.\n\nFirst, I will use the `song_artist_lookup` function to identify the band associated with the song \"What Lovers Do.\"",
+            "selected_fn": "song_artist_lookup",
+            "args": {
+              "song_title": "What Lovers Do"
+            },
+            "return_value": "Maroon 5",
+            "errors": null
+          },
+          {
+            "reasoning": "To determine the ASCII code of the last letter of the first name of the current drummer of the band who performed the song \"What Lovers Do,\" we have identified that the band is Maroon 5. Next, we need to find the current drummer of Maroon 5. Once we have the drummer's name, we will extract the first name, determine the last letter of this first name, and then convert that letter to its ASCII code. I will proceed by using the `band_member_info` function to find the current drummer of Maroon 5.",
+            "selected_fn": "band_member_info",
+            "args": {
+              "band_name": "Maroon 5",
+              "member_role": [
+                "drummer"
+              ],
+              "current_status": true
+            },
+            "return_value": {
+              "drummer": {
+                "current": "Matt Flynn"
+              }
+            },
+            "errors": null
+          },
+          {
+            "reasoning": "To determine the ASCII code of the last letter of the first name of the current drummer of the band who performed the song \"What Lovers Do,\" we have identified that the band is Maroon 5. The current drummer of Maroon 5 is Matt Flynn. We will now extract the first name, \"Matt,\" determine the last letter of this first name, which is 't', and then convert that letter to its ASCII code.",
+            "selected_fn": "ascii_converter_plus",
+            "args": {
+              "characters": "t",
+              "output_format": "list",
+              "encoding": "ASCII"
+            },
+            "return_value": {
+              "error": "Invalid characters input. Must be a list with 1 to 100 single-character strings."
+            },
+            "errors": null
+          },
+          {
+            "reasoning": "To determine the ASCII code of the last letter of the first name of the current drummer of the band who performed the song \"What Lovers Do,\" we have identified that the band is Maroon 5. The current drummer of Maroon 5 is Matt Flynn. We will now extract the first name, \"Matt,\" determine the last letter of this first name, which is 't', and then convert that letter to its ASCII code. The previous attempt with `ascii_converter_plus` failed due to incorrect input format. I will correctly provide the character 't' as a list.",
+            "selected_fn": "ascii_converter_plus",
+            "args": {
+              "characters": [
+                "t"
+              ],
+              "output_format": "list",
+              "encoding": "ASCII"
+            },
+            "return_value": [
+              116
+            ],
+            "errors": null
+          },
+          {
+            "reasoning": "To determine the ASCII code of the last letter of the first name of the current drummer of the band who performed the song \"What Lovers Do,\" we have identified that the band is Maroon 5. The current drummer of Maroon 5 is Matt Flynn. We extracted the first name, \"Matt,\" determined the last letter of this first name, which is 't', and then converted that letter to its ASCII code, which is 116.",
+            "selected_fn": "finish",
+            "args": {
+              "answer": "116"
+            },
+            "return_value": "116",
+            "errors": null
+          }
+        ],
+        "functions": {
+          "song_artist_lookup": {
+            "function_name": "song_artist_lookup",
+            "arguments": "(song_title: str, artist_type: str = 'any', case_sensitive: bool = False, include_similar_titles: bool = False, genre: str = None, release_year: int = None, popularity: int = None) -> str",
+            "docstring": "Function to find the artist or band associated with a given song title.\nParameters:\n- song_title (str): The title of the song for which the artist or band is to be identified.\n- artist_type (str): The type of artist to search for. Defaults to 'any'.\n- case_sensitive (bool): Whether the search should be case-sensitive. Defaults to false.\n- include_similar_titles (bool): Whether to include results for similar song titles. Defaults to false.\n- genre (str): The genre of music to filter the search results by. Optional.\n- release_year (int): The year the song was released to filter the search results by. Optional.\n- popularity (int): Filter results based on the popularity of the song. Optional.\nReturns:\n- str: The name of the artist or band."
+          },
+          "band_member_info": {
+            "function_name": "band_member_info",
+            "arguments": "(band_name: str, member_role: list, current_status: bool = True, tenure: bool = False, past_roles: bool = False, additional_attributes: dict = None)",
+            "docstring": "Retrieve comprehensive information about band members.\n\nParameters:\n- band_name (str): The name of the band for which information is requested.\n- member_role (list): The roles of the band members, e.g., drummer, guitarist, etc. Can specify multiple roles.\n- current_status (bool): Whether to retrieve the current member(s) holding the specified role(s). Defaults to true.\n- tenure (bool): Whether to include information about the tenure of the band member(s). Defaults to false.\n- past_roles (bool): Whether to include information about past roles held by the band member(s). Defaults to false.\n- additional_attributes (dict): Additional attributes to include in the information about the band member(s).\n\nReturns:\n- dict: A dictionary containing the requested information about the band members."
+          },
+          "extract_first_name": {
+            "function_name": "extract_first_name",
+            "arguments": "(full_name, name_delimiter=' ', case_sensitive=True, include_middle_name=False, title_handling='ignore', international_format=False)",
+            "docstring": "No docstring."
+          },
+          "extract_last_character": {
+            "function_name": "extract_last_character",
+            "arguments": "(input: str, trim_whitespace: bool = True, ignore_punctuation: bool = False, character_type: str = 'letter', output_format: str = 'character') -> str",
+            "docstring": "No docstring."
+          },
+          "ascii_converter_plus": {
+            "function_name": "ascii_converter_plus",
+            "arguments": "(characters, output_format='list', encoding='ASCII', case_sensitive=True, filter='none')",
+            "docstring": "No docstring."
+          },
+          "finish": {
+            "function_name": "finish",
+            "arguments": "(answer: str)",
+            "docstring": "Conclude the trajectory and return the final answer."
+          }
+        },
+        "reasoning": "To determine the ASCII code of the last letter of the first name of the current drummer of the band who performed the song \"What Lovers Do,\" we have identified that the band is Maroon 5. The current drummer of Maroon 5 is Matt Flynn. We extracted the first name, \"Matt,\" determined the last letter of this first name, which is 't', and then converted that letter to its ASCII code, which is 116.",
+        "next_selected_fn": "finish",
+        "args": {
+          "answer": "116"
+        }
+      }
+    ],
+    "signature": {
+      "instructions": "For the final answer, produce short (not full sentence) answers in which you format dates as YYYY-MM-DD, names as Firstname Lastname, and numbers without leading 0s.\n\nIf the module receives a question involving identifying a person based on broad criteria such as profession and campaign association, and the initial function call returns no result, it should use internal knowledge to identify likely candidates and adjust parameters or use known names directly. When using the 'biographical_info_retriever' function to retrieve specific details like a birthdate, ensure the correct 'info_type' is used, such as 'birth_date' instead of 'birthdate', to avoid errors. This approach will lead to more reliable retrieval of information and correct calculation of subsequent dates.\n\nIf the module receives a question involving a relationship type that is not directly supported by the `historical_relationship_finder` function, it should attempt a broader search using a more general relationship type, such as 'grandparent' instead of 'paternal grandfather'. When extracting names, especially those that are hyphenated, ensure to handle them as a single unit by setting `handle_hyphenated` to true. When counting repeated letters, consider ignoring non-letter characters such as hyphens to ensure accurate counts.\n\nIf the module receives an error due to an unsupported relationship type in `historical_genealogy_query`, it should switch to using `historical_genealogy_lookup` with the appropriate parameters. If that also returns no data, the module should then rely on known historical context to deduce the information needed. In such cases, ensure to verify the historical facts before proceeding. For example, if you know the paternal grandfather of Máel Ruanaid Mac Donnchada Midi is Domnall Midi, extract the first letters 'D' and 'M' and concatenate them in lowercase. Avoid making assumptions without verification when identifying historical figures.\n\nIf the module receives a question requiring genealogical information and encounters an unsupported relationship type with a function like `historical_relationship_finder`, it should switch to using factual genealogical data, such as known family trees, rather than guessing. In this case, when identifying Harriet Hemings's maternal grandfather, use established historical and genealogical resources to correctly identify John Wayles, instead of incorrectly assuming Thomas Jefferson. This ensures the correct extraction of 'Wayles' as the last name, which will lead to the accurate calculation of the difference in letter count.",
+      "fields": [
+        {
+          "prefix": "Question:",
+          "description": "${question}"
+        },
+        {
+          "prefix": "Trajectory:",
+          "description": "${trajectory}"
+        },
+        {
+          "prefix": "Functions:",
+          "description": "${functions}"
+        },
+        {
+          "prefix": "Reasoning: Let's think step by step in order to",
+          "description": "${reasoning}"
+        },
+        {
+          "prefix": "Next Selected Fn:",
+          "description": "${next_selected_fn}"
+        },
+        {
+          "prefix": "Args:",
+          "description": "${args}"
+        }
+      ]
+    },
+    "lm": null
+  },
+  "metadata": {
+    "dependency_versions": {
+      "python": "3.12",
+      "dspy": "3.0.0b2",
+      "cloudpickle": "3.1"
+    }
+  }
+}
